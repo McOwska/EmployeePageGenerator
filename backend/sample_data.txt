@@ -1,0 +1,6 @@
+{
+    "type": "1",
+    "name": "Zuzanna Makowska",
+    "position": "Marketing Manager",
+    "description": "Zuzanna is a Marketing Manager at Tidio. She’s a digital marketing enthusiast, with particular interest in social media and content marketing. She’s passionate about the latest trends and loves to share her knowledge and experience with others."
+}
