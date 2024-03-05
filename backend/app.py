@@ -16,6 +16,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def create_page():
     # Access form data fields
     type_ = request.form['type']
+    language = request.form['language']
     name = request.form['name']
     position = request.form['position'] if 'position' in request.form else None
     localization = request.form['localization'] if 'localization' in request.form else None
@@ -28,11 +29,20 @@ def create_page():
         file.save(file_path)
 
     if type_ == "New Employee":
-        template_path = './templates/blue_1_kopia.pptx'
+        if language == "pl":
+            template_path = './templates/new_employee_pl.pptx'
+        else:
+            template_path = './templates/new_employee_eng.pptx'
     elif type_ == "Current Employee":
-        template_path = './templates/green_1.pptx'
+        if language == "pl":
+            template_path = './templates/current_employee_pl.pptx'
+        else:
+            template_path = './templates/current_employee_eng.pptx'
     else:
-        template_path = './templates/orange_1.pptx'
+        if language == "pl":
+            template_path = './templates/leaving_employee_pl.pptx'
+        else:
+            template_path = './templates/leaving_employee_eng.pptx'
 
     output_path = './output.pptx'
     
@@ -44,7 +54,13 @@ def create_page():
         'description': description,
         'image_path': file_path if file else None
     }
+    
+    os.path.exists(output_path) and os.remove(output_path)
+    os.path.exists(output_path.replace('.pptx', '.pdf')) and os.remove(output_path.replace('.pptx', '.pdf'))
+    
     create_pptx(data, template_path, output_path, file_path)
+    
+    os.remove(file_path)
     
     return "Success", 200
 
